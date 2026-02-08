@@ -1,132 +1,14 @@
-import { MonsterButton } from '@/components/MonsterButton';
-import { MonsterCard } from '@/components/MonsterCard';
-import { ProgressModal } from '@/components/ProgressModal';
-import { ProgressWidget } from '@/components/ProgressWidget';
-import { ScreenContainer } from '@/components/ScreenContainer';
-import { MonsterColors } from '@/constants/Colors';
-import { EXERCISES } from '@/constants/Exercises';
-import { useWorkout } from '@/context/WorkoutContext';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Image } from 'expo-image';
-import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { MonsterCoach } from '@/components/MonsterCoach';
+
+// ... existing imports
 
 export default function DashboardScreen() {
-  const { getWorkoutStats, history, isWorkoutActive, workoutName, workoutTimer, startWorkout } = useWorkout();
-  const [progressModalVisible, setProgressModalVisible] = useState(false);
-  const stats = getWorkoutStats();
+  // ... existing code
 
-  // Get last workout title or default
-  const lastWorkoutTitle = history.length > 0 ? history[0].name : "Sem treinos recentes";
-  const lastWorkoutDate = history.length > 0 ? new Date(history[0].date).toLocaleDateString('pt-BR') : "";
-
-  // Random Featured Exercise
-  const [featuredExercise, setFeaturedExercise] = useState(EXERCISES[0]);
-  useEffect(() => {
-      const random = EXERCISES[Math.floor(Math.random() * EXERCISES.length)];
-      setFeaturedExercise(random);
-  }, []);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  return (
-    <ScreenContainer>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        <View style={styles.headerContainer}>
-          <View style={styles.logoRow}>
-            <Image source={require('../../assets/images/logo.png')} style={styles.headerLogo} contentFit="contain" />
-            <View>
-                <Text style={styles.greeting}>BEM-VINDO DE VOLTA</Text>
-                <Text style={styles.username}>MODO MONSTRO</Text>
-            </View>
-          </View>
         </View>
 
-        {/* Active Workout Widget */}
-        {isWorkoutActive ? (
-            <MonsterCard style={styles.activeWorkoutCard}>
-                <View style={styles.activeHeader}>
-                    <View>
-                        <Text style={styles.activeLabel}>EM ANDAMENTO</Text>
-                        <Text style={styles.activeTitle}>{workoutName || "Treino Monstro"}</Text>
-                    </View>
-                    <Text style={styles.activeTimer}>{formatTime(workoutTimer)}</Text>
-                </View>
-                <MonsterButton title="Retomar Treino" icon="play-circle" onPress={() => router.push('/track')} style={{ marginTop: 16 }} />
-            </MonsterCard>
-        ) : (
-             <MonsterCard style={styles.activeWorkoutCard}>
-                <View style={styles.activeHeader}>
-                    <View>
-                         <Text style={styles.activeLabel}>PRONTO PRA ESMAGAR?</Text>
-                         <Text style={styles.activeTitle}>Começar Treino</Text>
-                    </View>
-                    <FontAwesome name="bolt" size={24} color={MonsterColors.textSecondary} />
-                </View>
-                 <MonsterButton
-                    title="Novo Treino"
-                    icon="plus-circle"
-                    onPress={() => {
-                        startWorkout();
-                        router.push('/track');
-                    }}
-                    style={{ marginTop: 16 }}
-                 />
-            </MonsterCard>
-        )}
-
-        <MonsterCard style={styles.statsCard}>
-          <View style={styles.statsRow}>
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>{stats.totalWorkouts}</Text>
-              <Text style={styles.statLabel}>Treinos</Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>{Math.round(stats.totalTime / 3600)}h</Text>
-              <Text style={styles.statLabel}>Tempo</Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>{(stats.totalVolume / 1000).toFixed(1)}k</Text>
-              <Text style={styles.statLabel}>Volume</Text>
-            </View>
-          </View>
-        </MonsterCard>
-
-        {/* Progress Widget */}
-        <ProgressWidget onPress={() => setProgressModalVisible(true)} />
-
-        <Text style={styles.sectionTitle}>AÇÕES RÁPIDAS</Text>
-
-        <View style={styles.grid}>
-          {/* History Widget */}
-          <MonsterCard style={styles.gridItem} title="Histórico">
-            <FontAwesome name="history" size={32} color={MonsterColors.secondary} style={styles.icon} />
-             <View style={styles.gridContent}>
-                <Text style={styles.gridValue}>{history.length}</Text>
-                <Text style={styles.microText} numberOfLines={1}>{lastWorkoutTitle}</Text>
-                <Text style={styles.gridDate}>{lastWorkoutDate}</Text>
-             </View>
-             <MonsterButton title="Ver" icon="list-ol" onPress={() => router.push('/history')} style={styles.microButton} variant="outline" />
-          </MonsterCard>
-
-          {/* Featured Exercise Widget */}
-          <MonsterCard style={styles.gridItem} title="Destaque">
-             <FontAwesome name={featuredExercise.icon} size={32} color={MonsterColors.primary} style={styles.icon} />
-             <View style={styles.gridContent}>
-                <Text style={styles.gridLabel}>TENTE ISSO</Text>
-                <Text style={styles.gridValueSmall} numberOfLines={1}>{featuredExercise.name}</Text>
-                <Text style={styles.microText}>{featuredExercise.muscleGroup}</Text>
-             </View>
-             <MonsterButton title="Aprender" icon="search" onPress={() => router.push('/library')} style={styles.microButton} variant="outline" />
-          </MonsterCard>
-        </View>
+        {/* AI Monster Coach Widget */}
+        <MonsterCoach />
 
         <MonsterCard title="Dica do Dia">
           <Text style={styles.tipText}>"A dor é apenas a fraqueza saindo do corpo. Empurre mais forte hoje."</Text>
