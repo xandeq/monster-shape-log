@@ -71,7 +71,7 @@ export const searchExerciseVideo = async (exerciseName: string): Promise<{ title
             },
             headers: {
                 // Explicitly set authorization to the Anon Key
-                Authorization: `Bearer ${supabase['supabaseKey'] || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkYm1wenFod29remRyZGVudXBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0ODUyNTIsImV4cCI6MjA4NjA2MTI1Mn0.qTTb00H865Ymt1qxYM3bYvdthgtMvKnYpwpDjS7hD1o'}`
+                Authorization: `Bearer ${supabase['supabaseKey'] || process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY}`
             }
         });
 
