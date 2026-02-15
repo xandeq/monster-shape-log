@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Log - Treine como um Monstro</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="70">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand glitch-effect" href="#">MONSTER LOG</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Funcionalidades</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Prints</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#differentials">Diferenciais</a></li>
+                    <li class="nav-item"><a class="nav-link cta-link" href="#download">Download</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section d-flex align-items-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-text" data-aos="fade-right">
+                    <h1 class="display-3 fw-bold text-uppercase">Treine como um <span class="text-neon">monstro</span>.<br>Evolua como uma <span class="text-neon">máquina</span>.</h1>
+                    <p class="lead text-white my-4">O app definitivo para quem leva o treino a sério. Registre, analise e destrua seus limites.</p>
+                    <a href="#download" class="btn btn-neon btn-lg text-uppercase fw-bold">Baixar o App <i class="fas fa-download ms-2"></i></a>
+                </div>
+                <div class="col-lg-6 hero-img text-center" data-aos="fade-left">
+                    <img src="images/hero-mockup.png" alt="Monster Log App Interface" class="img-fluid floating-anim">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funcionalidades -->
+    <section id="features" class="section-padding bg-black">
+        <div class="container">
+            <div class="section-title text-center mb-5">
+                <h2 class="text-uppercase">Funcionalidades <span class="text-neon">Hardcore</span></h2>
+                <div class="divider mx-auto"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <h3>Registro Rápido</h3>
+                        <p>Interface otimizada para você perder menos tempo digitando e mais tempo levantando peso.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3>Histórico Completo</h3>
+                        <p>Acesse cada treino, cada série e cada repetição. Seu progresso, documentado.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Gráficos de Progressão</h3>
+                        <p>Visualize sua evolução de carga e volume. Dados que mostram quem manda.</p>
+                    </div>
+                </div>
+                <!-- Mais cards conforme pedido -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-stopwatch"></i>
+                        </div>
+                        <h3>Cronômetro Inteligente</h3>
+                        <p>Descanso preciso entre séries. Nem mais, nem menos.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <h3>Dark Mode Agressivo</h3>
+                        <p>Visual que não cansa a vista e economiza bateria. Foco total.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Privacidade Total</h3>
+                        <p>Seus dados são seus. Armazenamento local e seguro.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prints do App -->
+    <section id="gallery" class="section-padding bg-darker">
+        <div class="container">
+            <div class="section-title text-center mb-5">
+                <h2 class="text-uppercase">Dentro da <span class="text-neon">Besta</span></h2>
+                <div class="divider mx-auto"></div>
+            </div>
+            <div class="row g-4" id="gallery-container">
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="images/dashboard.jpg" alt="Dashboard" class="img-fluid" data-bs-toggle="modal" data-bs-target="#imageModal" data-src="images/dashboard.jpg">
+                    </div>
+                </div>
+                 <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="images/track.jpg" alt="Track Workout" class="img-fluid" data-bs-toggle="modal" data-bs-target="#imageModal" data-src="images/track.jpg">
+                    </div>
+                </div>
+                 <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="images/historyjpg.jpg" alt="History" class="img-fluid" data-bs-toggle="modal" data-bs-target="#imageModal" data-src="images/historyjpg.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diferenciais -->
+    <section id="differentials" class="section-padding bg-gradient-black">
+        <div class="container">
+             <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="text-uppercase mb-4">Por que o <span class="text-neon">Monster Log?</span></h2>
+                    <ul class="list-unstyled differential-list">
+                        <li><i class="fas fa-check-circle text-neon me-3"></i> <strong>Foco Total na Performance:</strong> Sem distrações, apenas treino.</li>
+                        <li><i class="fas fa-check-circle text-neon me-3"></i> <strong>Design Agressivo:</strong> Estética que motiva.</li>
+                        <li><i class="fas fa-check-circle text-neon me-3"></i> <strong>Offline-First:</strong> Funciona em qualquer lugar, sem internet.</li>
+                        <li><i class="fas fa-check-circle text-neon me-3"></i> <strong>Experiência Fluida:</strong> Zero lag. Velocidade máxima.</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="images/fitness-illustration.png" alt="Fitness Illustration" class="img-fluid neon-glow">
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section id="download" class="section-padding text-center bg-black cta-section">
+        <div class="container">
+             <h2 class="display-4 text-uppercase fw-bold mb-4">Pronto para <span class="text-neon">evoluir?</span></h2>
+             <p class="lead text-white mb-5">Não perca mais tempo com anotações de papel. Entre para a elite.</p>
+             <a href="#" class="btn btn-neon btn-xl text-uppercase fw-bold pulse-anim">Começar Agora <i class="fas fa-arrow-right ms-2"></i></a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-4 border-top border-secondary">
+        <div class="container text-center">
+            <div class="mb-3">
+                <a href="#" class="text-white me-3 fs-4"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-white me-3 fs-4"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-white fs-4"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="mb-0">&copy; 2026 Monster Log. Todos os direitos reservados.</p>
+            <p class="small text-muted mt-2"><a href="politicadeprivacidade.html" class="text-muted text-decoration-none">Política de Privacidade</a></p>
+        </div>
+    </footer>
+
+    <!-- Modal for Images -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body p-0 text-center">
+                    <img src="" id="modalImage" class="img-fluid rounded border border-neon">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

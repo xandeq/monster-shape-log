@@ -1,0 +1,104 @@
+npm warn Unknown global config "msvs_version". This will stop working in the next major version of npm.
+Starting project at C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log
+JsonFileError: Error parsing JSON: # ... existing code ...
+    "name": "Monster Log",
+    "slug": "monster-log",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "monsterlog",
+    "userInterfaceStyle": "automatic",
+# ... existing code ...
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.xandeq.monstershapelog"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
+
+├─ File: C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\app.json
+└─ Cause: SyntaxError: JSON5: invalid character '#' at 1:1
+> 1 | # ... existing code ...
+    | ^
+  2 |     "name": "Monster Log",
+  3 |     "slug": "monster-log",
+  4 |     "version": "1.0.0",
+JsonFileError: Error parsing JSON: # ... existing code ...
+    "name": "Monster Log",
+    "slug": "monster-log",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "monsterlog",
+    "userInterfaceStyle": "automatic",
+# ... existing code ...
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.xandeq.monstershapelog"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
+
+├─ File: C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\app.json
+└─ Cause: SyntaxError: JSON5: invalid character '#' at 1:1
+> 1 | # ... existing code ...
+    | ^
+  2 |     "name": "Monster Log",
+  3 |     "slug": "monster-log",
+  4 |     "version": "1.0.0",
+    at parseJsonString (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\@expo\json-file\build\JsonFile.js:198:19)
+    at JsonFile.read (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\@expo\json-file\build\JsonFile.js:160:12)
+    at getStaticConfig (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\@expo\config\build\getConfig.js:64:38)
+    at getConfig (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\@expo\config\build\Config.js:206:85)
+    at startAsync (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\expo\node_modules\@expo\cli\build\src\start\startAsync.js:129:68)
+    at expoStart (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\expo\node_modules\@expo\cli\build\src\start\index.js:146:12)
