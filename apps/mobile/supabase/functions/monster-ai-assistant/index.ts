@@ -21,7 +21,10 @@ Deno.serve(async (req) => {
         // In production, uncomment the auth verification logic.
 
         if (action === 'search_video') {
-            const YOUTUBE_API_KEY = 'AIzaSyAH_BraA9ttzYuUDbjsYPINzcK8lW9Jlus'; // Use the user's provided key directly
+            const YOUTUBE_API_KEY = Deno.env.get('YOUTUBE_API_KEY');
+            if (!YOUTUBE_API_KEY) {
+                throw new Error('Missing YOUTUBE_API_KEY environment variable');
+            }
 
             // Construct the YouTube Data API search query
             const query = encodeURIComponent(`execução correta ${exerciseName} musculação`);
