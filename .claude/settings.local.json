@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Remove-Item -Recurse -Force \"C:\\\\Users\\\\acq20\\\\Desktop\\\\Trabalho\\\\Alexandre Queiroz Marketing Digital\\\\DIAX\\\\Monster Log\\\\apps\\\\mobile\\\\android\\\\app\\\\src\\\\main\\\\java\\\\com\")",
+      "Bash(./gradlew clean:*)",
+      "Bash(./gradlew bundleRelease:*)",
+      "Bash(node node_modules/@expo/cli/build/bin/cli export:embed:*)",
+      "Bash(node \"..\\\\..\\\\node_modules\\\\@expo\\\\cli\\\\build\\\\bin\\\\cli\" export:embed:*)",
+      "Bash(./gradlew:*)",
+      "Bash(node -e:*)",
+      "Bash(node expo/scripts/resolveAppEntry.js:*)",
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm install:*)",
+      "Bash(cmd /c \"mklink /D C:\\\\ml \"\"C:\\\\Users\\\\acq20\\\\Desktop\\\\Trabalho\\\\Alexandre Queiroz Marketing Digital\\\\DIAX\\\\Monster Log\"\"\")",
+      "Bash(cmd /c \"subst Z: \"\"C:\\\\Users\\\\acq20\\\\Desktop\\\\Trabalho\\\\Alexandre Queiroz Marketing Digital\\\\DIAX\\\\Monster Log\"\" 2>nul\")",
+      "Bash(cmd /c \"cd /d Z:\\\\apps\\\\mobile\\\\android && gradlew.bat bundleRelease\")",
+      "Bash(cmd /c \"subst Z: \"\"C:\\\\Users\\\\acq20\\\\Desktop\\\\Trabalho\\\\Alexandre Queiroz Marketing Digital\\\\DIAX\\\\Monster Log\"\"\")",
+      "Bash(cmd /c \"Z:\\\\apps\\\\mobile\\\\android\\\\gradlew.bat bundleRelease -p Z:\\\\apps\\\\mobile\\\\android\")",
+      "Bash(cmd /c \"subst Z: \"\"C:\\\\Users\\\\acq20\\\\Desktop\\\\Trabalho\\\\Alexandre Queiroz Marketing Digital\\\\DIAX\\\\Monster Log\"\" 2>nul & dir Z:\"\")",
+      "Bash(powershell:*)",
+      "Bash(echo:*)"
+    ]
+  }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusão de Conta - Monster Log</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hero-section-small {
+            min-height: 50vh;
+            padding: 80px 0;
+            background: radial-gradient(circle at center, #111 0%, #000 70%);
+            display: flex;
+            align-items: center;
+        }
+        .step-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+             border-color: var(--neon-green);
+        }
+        .step-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--neon-green);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="70">
+
+    <!-- Navbar (Reused) -->
+    <nav id="navbar" class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand glitch-effect" href="index.html">MONSTER LOG</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Voltar ao Início</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section-small text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <h1 class="display-4 fw-bold text-uppercase">Solicitação de <span class="text-neon">Exclusão de Conta</span></h1>
+                    <p class="lead text-white my-4">O Monster Log respeita sua privacidade e garante o direito à exclusão total e permanente dos seus dados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Solicitar -->
+    <section class="section-padding bg-black">
+        <div class="container">
+            <div class="section-title text-center mb-5">
+                <h2 class="text-uppercase">Como <span class="text-neon">Solicitar</span></h2>
+                <div class="divider mx-auto"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="step-card text-center">
+                        <div class="step-number">01</div>
+                        <h4>Envie um E-mail</h4>
+                        <p>Escreva para <a href="mailto:suporte@monsterlog.app" class="text-neon text-decoration-none">suporte@monsterlog.app</a> com o assunto "Exclusão de Conta".</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card text-center">
+                        <div class="step-number">02</div>
+                        <h4>Dados Necessários</h4>
+                        <p>Informe o e-mail exato utilizado no cadastro da sua conta no app para verificação.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card text-center">
+                        <div class="step-number">03</div>
+                        <h4>Confirmação</h4>
+                        <p>Aguarde nossa resposta confirmando que a solicitação foi recebida e processada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dados Excluídos -->
+    <section class="section-padding bg-darker">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h3 class="text-uppercase mb-4 text-center"><i class="fas fa-trash-alt text-neon me-2"></i> O que será <span class="text-neon">Excluído</span></h3>
+                    <ul class="list-group list-group-flush bg-transparent">
+                        <li class="list-group-item bg-transparent text-white border-secondary"><i class="fas fa-check text-neon me-2"></i> Dados de perfil (Nome, E-mail, Foto)</li>
+                        <li class="list-group-item bg-transparent text-white border-secondary"><i class="fas fa-check text-neon me-2"></i> Histórico completo de treinos</li>
+                        <li class="list-group-item bg-transparent text-white border-secondary"><i class="fas fa-check text-neon me-2"></i> Exercícios personalizados cadastrados</li>
+                        <li class="list-group-item bg-transparent text-white border-secondary"><i class="fas fa-check text-neon me-2"></i> Fotos de progresso enviadas</li>
+                        <li class="list-group-item bg-transparent text-white border-secondary"><i class="fas fa-check text-neon me-2"></i> Todas as estatísticas e métricas de desempenho</li>
+                    </ul>
+
+                    <div class="alert alert-danger mt-4 bg-transparent border-danger text-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i> <strong>Atenção:</strong> A exclusão da conta é permanente e irreversível. Uma vez realizada, não é possível recuperar seus dados.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Informações Legais -->
+    <section class="section-padding bg-black">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h4 class="text-uppercase mb-3">Retenção de Dados</h4>
+                    <p class="text-muted mb-4">
+                        Logs técnicos de acesso podem ser mantidos por até 30 dias para fins exclusivos de segurança e prevenção de fraudes.
+                        Dados exigidos por obrigações legais fiscais ou jurídicas podem ser mantidos pelo período determinado pela legislação aplicável.
+                        Após estes prazos, a remoção é definitiva.
+                    </p>
+
+                    <h4 class="text-uppercase mb-3">Tempo de Processamento</h4>
+                    <p class="text-muted">
+                        Todas as solicitações de exclusão são analisadas e processadas em até <strong>7 dias úteis</strong> após a confirmação da identidade do solicitante.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Reused) -->
+    <footer class="bg-black text-white py-4 border-top border-secondary">
+        <div class="container text-center">
+            <div class="mb-3">
+                <a href="#" class="text-white me-3 fs-4"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-white me-3 fs-4"><i class="fab fa-github"></i></a>
+                <a href="mailto:suporte@monsterlog.app" class="text-white fs-4"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="mb-0">&copy; 2026 Monster Log. Todos os direitos reservados.</p>
+            <p class="small text-muted mt-2"><a href="politicadeprivacidade.html" class="text-muted text-decoration-none">Política de Privacidade</a></p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

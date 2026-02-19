@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Monster Log - Global Styles
+  Hardcore Aesthetic - Dark Mode Only
+*/
+
+@layer base {
+  body {
+    @apply bg-background text-text-primary;
+  }
+}

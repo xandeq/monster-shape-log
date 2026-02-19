@@ -1,0 +1,85 @@
+npm warn Unknown global config "msvs_version". This will stop working in the next major version of npm.
+Starting project at C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log
+Starting Metro Bundler
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Web node_modules\expo-router\entry.js ▓▓▓▓▓▓▓▓░░░░░░░░ 53.2% (456/625)
+λ node_modules\expo-router\node\render.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 63.6% (727/921)
+λ Bundled 3288ms node_modules\expo-router\node\render.js (1390 modules)
+"shadow*" style props are deprecated. Use "boxShadow".
+λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents 
+  console.warn (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\expo\node_modules\@expo\cli\src\start\server\serverLogLikeMetro.ts:161:21)
+  warnOnce (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\warnOnce\index.js:24:13)
+  createDOMProps (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\createDOMProps\index.js:805:13)
+  createElement (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\createElement\index.js:23:32)
+  Component (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\View\index.js:111:23)
+  Object.callComponentInDEV [as react-stack-bottom-frame] (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:8970:18)
+  renderWithHooks (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:4699:19)
+  run (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5539:39)
+  retryNode (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5899:31)
+  renderNodeDestructive (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5849:11)
+Web node_modules\expo-router\entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1377/1377)
+Web Bundled 6779ms node_modules\expo-router\entry.js (1377 modules)
+Web Bundled 1029ms node_modules\expo-router\entry.js (1325 modules)
+ LOG  [web] Logs will appear in the browser console
+Web node_modules\expo-router\entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+λ Bundled 129ms node_modules\expo-router\node\render.js (1 module)
+"shadow*" style props are deprecated. Use "boxShadow".
+λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents 
+  console.warn (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\expo\node_modules\@expo\cli\src\start\server\serverLogLikeMetro.ts:161:21)
+  warnOnce (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\warnOnce\index.js:24:13)
+  createDOMProps (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\createDOMProps\index.js:805:13)
+  createElement (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\createElement\index.js:23:32)
+  Component (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\View\index.js:111:23)
+  Object.callComponentInDEV [as react-stack-bottom-frame] (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:8970:18)
+  renderWithHooks (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:4699:19)
+  run (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5539:39)
+  retryNode (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5899:31)
+  renderNodeDestructive (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5849:11)
+Web Bundled 1399ms node_modules\expo-router\entry.js (1 module)
+Web node_modules\expo-router\entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Web Bundled 373ms node_modules\expo-router\entry.js (1 module)
+λ Bundled 453ms node_modules\expo-router\node\render.js (1 module)
+"shadow*" style props are deprecated. Use "boxShadow".
+λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents 
+  console.warn (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\expo\node_modules\@expo\cli\src\start\server\serverLogLikeMetro.ts:161:21)
+  warnOnce (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\warnOnce\index.js:24:13)
+  createDOMProps (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\createDOMProps\index.js:805:13)
+  createElement (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\createElement\index.js:23:32)
+  Component (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\View\index.js:111:23)
+  Object.callComponentInDEV [as react-stack-bottom-frame] (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:8970:18)
+  renderWithHooks (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:4699:19)
+  run (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5539:39)
+  retryNode (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5899:31)
+  renderNodeDestructive (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5849:11)
+Web node_modules\expo-router\entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+λ Bundled 56ms node_modules\expo-router\node\render.js (1 module)
+"shadow*" style props are deprecated. Use "boxShadow".
+λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents 
+  console.warn (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\expo\node_modules\@expo\cli\src\start\server\serverLogLikeMetro.ts:161:21)
+  warnOnce (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\warnOnce\index.js:24:13)
+  createDOMProps (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\createDOMProps\index.js:805:13)
+  createElement (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\createElement\index.js:23:32)
+  Component (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\View\index.js:111:23)
+  Object.callComponentInDEV [as react-stack-bottom-frame] (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:8970:18)
+  renderWithHooks (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:4699:19)
+  run (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5539:39)
+  retryNode (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5899:31)
+  renderNodeDestructive (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5849:11)
+Web Bundled 630ms node_modules\expo-router\entry.js (1 module)
+λ Bundled 136ms node_modules\expo-router\node\render.js (1 module)
+Web Bundled 78ms node_modules\expo-router\entry.js (1 module)
+"shadow*" style props are deprecated. Use "boxShadow".
+λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents 
+  console.warn (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\expo\node_modules\@expo\cli\src\start\server\serverLogLikeMetro.ts:161:21)
+  warnOnce (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\warnOnce\index.js:24:13)
+  createDOMProps (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\modules\createDOMProps\index.js:805:13)
+  createElement (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\createElement\index.js:23:32)
+  Component (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-native-web\dist\exports\View\index.js:111:23)
+  Object.callComponentInDEV [as react-stack-bottom-frame] (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:8970:18)
+  renderWithHooks (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:4699:19)
+  run (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5539:39)
+  retryNode (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5899:31)
+  renderNodeDestructive (C:\Users\acq20\Desktop\Trabalho\Alexandre Queiroz Marketing Digital\DIAX\Monster Log\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:5849:11)
+Web Bundled 820ms node_modules\expo-router\entry.js (1 module)
+ LOG  [web] Logs will appear in the browser console

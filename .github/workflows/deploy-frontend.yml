@@ -1,0 +1,31 @@
+name: Deploy Frontend via FTP
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - "apps/frontend/**"
+    workflow_dispatch:
+
+jobs:
+    web-deploy:
+        name: Deploy to FTP
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v4
+
+            - name: Sync files to FTP
+              uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+              with:
+                  server: win1151.site4now.net
+                  username: partiurock-003
+                  password: ${{ secrets.FTP_PASSWORD }}
+                  local-dir: ./apps/frontend/
+                  server-dir: /monster-log/
+                  protocol: ftp
+                  exclude: |
+                      **/.git*
+                      **/.git*/**
+                      **/node_modules/**

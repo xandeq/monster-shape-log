@@ -1,0 +1,219 @@
+:root {
+    --primary-black: #000000;
+    --neon-green: rgb(0, 255, 136);
+    --secondary-white: #ffffff;
+    --dark-gray: #1a1a1a;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--primary-black);
+    color: var(--secondary-white);
+    overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+}
+
+.text-neon {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+/* Navbar */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.95);
+    border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-weight: 900;
+    color: var(--secondary-white);
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    color: var(--secondary-white) !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--neon-green) !important;
+    text-shadow: 0 0 5px rgba(0, 255, 136, 0.8);
+}
+
+.nav-link.cta-link {
+    border: 1px solid var(--neon-green);
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin-left: 10px;
+}
+
+.nav-link.cta-link:hover {
+    background-color: var(--neon-green);
+    color: var(--primary-black) !important;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 100vh;
+    padding: 100px 0;
+    background: radial-gradient(circle at center, #111 0%, #000 70%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.btn-neon {
+    background-color: var(--neon-green);
+    color: var(--primary-black);
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+.btn-neon:hover {
+    background-color: #fff;
+    color: var(--primary-black);
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
+    transform: translateY(-3px);
+}
+
+.floating-anim {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Features Section */
+.section-padding {
+    padding: 100px 0;
+}
+
+.bg-darker {
+    background-color: #0a0a0a;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--neon-green);
+    background: rgba(0, 255, 136, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+}
+
+.icon-box {
+    font-size: 2.5rem;
+    color: var(--neon-green);
+    margin-bottom: 20px;
+}
+
+.divider {
+    width: 60px;
+    height: 3px;
+    background-color: var(--neon-green);
+    margin: 20px 0;
+}
+
+/* Gallery */
+.gallery-item {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Differentials */
+.differential-list li {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.bg-gradient-black {
+    background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+}
+
+.neon-glow {
+    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.3));
+}
+
+/* CTA */
+.cta-section {
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('../images/hero-mockup.png') no-repeat center center/cover;
+    background-attachment: fixed;
+}
+
+.pulse-anim {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(0, 255, 136, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+}
+
+/* Footer */
+footer a:hover {
+    color: var(--neon-green) !important;
+}
+
+/* Glitch Effect (Simple) */
+.glitch-effect:hover {
+    text-shadow: 2px 2px var(--neon-green), -2px -2px #ff00de;
+    transition: all 0.1s;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+    .hero-img {
+        margin-top: 50px;
+    }
+}
