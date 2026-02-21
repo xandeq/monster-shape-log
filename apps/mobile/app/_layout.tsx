@@ -56,14 +56,19 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
+    if (error) {
+      // Em release, throw dentro de useEffect não é capturado pelo ErrorBoundary.
+      // Usar console.error para não crashar o app.
+      console.error('[Layout] Falha ao carregar fontes:', error);
+    }
   }, [error]);
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync().catch((e) =>
+        console.warn('[Layout] SplashScreen.hideAsync error:', e)
+      );
     }
   }, [loaded]);
 
@@ -102,10 +107,10 @@ function AuthGuard() {
 
         if (!session && !inAuthGroup) {
             // Redirect to the sign-in page.
-            router.replace('/login');
+            router.replace('/(auth)/login');
         } else if (session && inAuthGroup) {
             // Redirect away from the sign-in page.
-            router.replace('/');
+            router.replace('/(tabs)');
         }
     }, [session, loading, segments]);
 

@@ -12,8 +12,10 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@types/react": "~19.1.10",
     "prettier": "latest",
-    "turbo": "latest"
+    "turbo": "latest",
+    "typescript": "~5.9.2"
   },
   "packageManager": "npm@10.0.0",
   "dependencies": {

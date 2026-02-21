@@ -10,13 +10,6 @@ const config = getDefaultConfig(projectRoot);
 
 const finalConfig = withNativeWind(config, { input: "./app/global.css" });
 
-// Apply overrides AFTER withNativeWind to ensure they aren't clobbered
-finalConfig.resolver.disableHierarchicalLookup = true;
-finalConfig.resolver.nodeModulesPaths = [
-  path.resolve(projectRoot, "node_modules"),
-  path.resolve(monorepoRoot, "node_modules"),
-];
-
 // Helper to escape regex special characters
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
@@ -39,9 +32,5 @@ if (finalConfig.resolver.blockList) {
 } else {
   finalConfig.resolver.blockList = exclusionRegex;
 }
-
-console.log("DEBUG: nodeModulesPaths", finalConfig.resolver.nodeModulesPaths);
-console.log("DEBUG: blockList", finalConfig.resolver.blockList);
-module.exports = finalConfig;
 
 module.exports = finalConfig;
