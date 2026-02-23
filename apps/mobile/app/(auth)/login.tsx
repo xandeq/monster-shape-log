@@ -77,7 +77,7 @@ export default function LoginScreen() {
                     title={loading ? "ENTRANDO..." : "ACESSAR"}
                     onPress={signInWithEmail}
                     disabled={loading}
-                    icon="sign-in"
+                    icon={<FontAwesome name="sign-in" size={16} color={MonsterColors.background} />}
                     size="lg"
                     loading={loading}
                 />

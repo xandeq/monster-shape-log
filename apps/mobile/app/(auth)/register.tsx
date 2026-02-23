@@ -102,7 +102,7 @@ export default function RegisterScreen() {
                     title={loading ? "REGISTRANDO..." : "CADASTRAR"}
                     onPress={signUpWithEmail}
                     disabled={loading}
-                    icon="rocket"
+                    icon={<FontAwesome name="rocket" size={16} color={MonsterColors.background} />}
                     size="lg"
                     loading={loading}
                 />

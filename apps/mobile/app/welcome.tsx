@@ -1,6 +1,8 @@
 import { MonsterButton } from '@/components/MonsterButton';
 import { MonsterLayout } from '@/components/MonsterLayout';
 import { MonsterText } from '@/components/MonsterText';
+import { MonsterColors } from '@/constants/Colors';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { router } from 'expo-router';
 import React from 'react';
 import { View } from 'react-native';
@@ -29,7 +31,7 @@ export default function WelcomeScreen() {
             title="COMEÇAR AGORA"
             onPress={() => router.push('/(auth)/register')}
             size="lg"
-            icon="arrow-right"
+            icon={<FontAwesome name="arrow-right" size={16} color={MonsterColors.background} />}
           />
           <MonsterButton
             title="JÁ TENHO CONTA"

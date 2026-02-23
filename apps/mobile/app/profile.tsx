@@ -290,7 +290,7 @@ export default function ProfileScreen() {
                 title={saving ? "SALVANDO..." : "SALVAR PERFIL"}
                 onPress={updateProfile}
                 disabled={saving}
-                icon="save"
+                icon={<FontAwesome name="save" size={16} color={MonsterColors.background} />}
                 size="lg"
                 className="mb-8"
             />
@@ -332,7 +332,7 @@ export default function ProfileScreen() {
                         onPress={saveMeasurement}
                         variant="secondary"
                         disabled={savingMeasurement}
-                        icon="plus"
+                        icon={<FontAwesome name="plus" size={14} color={MonsterColors.accent} />}
                         size="md"
                         className="mt-4"
                     />
