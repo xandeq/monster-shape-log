@@ -104,29 +104,18 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
     return () => sub.remove();
   }, [checkSubscription]);
 
-  const openCheckout = useCallback(async (plan: 'pro' | 'elite', billing: 'monthly' | 'annual' = 'monthly') => {
+  const openCheckout = useCallback(async (_plan: 'pro' | 'elite', billing: 'monthly' | 'annual' = 'monthly') => {
     if (!session?.user) return;
 
-    const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || 'https://gdbmpzqhwokzdrdenupg.supabase.co';
-    const supabaseKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkYm1wenFod29remRyZGVudXBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0ODUyNTIsImV4cCI6MjA4NjA2MTI1Mn0.qTTb00H865Ymt1qxYM3bYvdthgtMvKnYpwpDjS7hD1o';
-
-    const res = await fetch(`${supabaseUrl}/functions/v1/stripe-checkout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${supabaseKey}`,
-      },
-      body: JSON.stringify({
-        plan,
-        billing,
-        user_id: session.user.id,
-        email: session.user.email,
-      }),
+    // Use supabase.functions.invoke so the user's JWT is sent automatically.
+    // The server verifies identity from the JWT — user_id/email in body are not trusted.
+    const { data, error } = await supabase.functions.invoke('stripe-checkout', {
+      body: { billing },
     });
 
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
-    if (data.url) {
+    if (error) throw new Error(error.message);
+    if (data?.error) throw new Error(data.error);
+    if (data?.url) {
       await Linking.openURL(data.url);
     }
   }, [session]);

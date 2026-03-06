@@ -6,6 +6,16 @@ const corsHeaders = {
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, stripe-signature',
 }
 
+// Constant-time string comparison to prevent timing attacks
+function timingSafeEqual(a: string, b: string): boolean {
+    if (a.length !== b.length) return false
+    let result = 0
+    for (let i = 0; i < a.length; i++) {
+        result |= a.charCodeAt(i) ^ b.charCodeAt(i)
+    }
+    return result === 0
+}
+
 // Verify Stripe webhook signature using Web Crypto API
 async function verifyStripeSignature(
     payload: string,
@@ -22,7 +32,7 @@ async function verifyStripeSignature(
     const sig = parts['v1']
     if (!timestamp || !sig) return false
 
-    // Check timestamp is within 5 minutes
+    // Check timestamp is within 5 minutes to prevent replay attacks
     const now = Math.floor(Date.now() / 1000)
     if (Math.abs(now - parseInt(timestamp)) > 300) return false
 
@@ -39,7 +49,8 @@ async function verifyStripeSignature(
         .map(b => b.toString(16).padStart(2, '0'))
         .join('')
 
-    return expectedSig === sig
+    // Use constant-time comparison to prevent timing attacks
+    return timingSafeEqual(expectedSig, sig)
 }
 
 Deno.serve(async (req) => {
@@ -52,15 +63,18 @@ Deno.serve(async (req) => {
         const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
         const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 
+        // STRIPE_WEBHOOK_SECRET is mandatory — reject requests if not configured
+        if (!STRIPE_WEBHOOK_SECRET) {
+            throw new Error('STRIPE_WEBHOOK_SECRET is not configured')
+        }
+
         const body = await req.text()
 
-        // Verify webhook signature if secret is configured
-        if (STRIPE_WEBHOOK_SECRET) {
-            const signature = req.headers.get('stripe-signature')
-            if (!signature) throw new Error('Missing stripe-signature header')
-            const valid = await verifyStripeSignature(body, signature, STRIPE_WEBHOOK_SECRET)
-            if (!valid) throw new Error('Invalid webhook signature')
-        }
+        // Verify webhook signature — always required
+        const signature = req.headers.get('stripe-signature')
+        if (!signature) throw new Error('Missing stripe-signature header')
+        const valid = await verifyStripeSignature(body, signature, STRIPE_WEBHOOK_SECRET)
+        if (!valid) throw new Error('Invalid webhook signature')
 
         const event = JSON.parse(body)
         const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
