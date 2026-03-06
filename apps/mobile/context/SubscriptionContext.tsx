@@ -60,12 +60,14 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
       return;
     }
 
-    // Dev override (for testing UI without real payment)
-    const devPro = await AsyncStorage.getItem(DEV_KEY);
-    if (devPro === 'true') {
-      setSubscription({ plan: 'pro', status: 'active', expiresAt: null });
-      setLoading(false);
-      return;
+    // Dev override (for testing UI without real payment — dev builds only)
+    if (__DEV__) {
+      const devPro = await AsyncStorage.getItem(DEV_KEY);
+      if (devPro === 'true') {
+        setSubscription({ plan: 'pro', status: 'active', expiresAt: null });
+        setLoading(false);
+        return;
+      }
     }
 
     try {
@@ -125,6 +127,7 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
   }, [checkSubscription]);
 
   const devSetPro = useCallback((value: boolean) => {
+    if (!__DEV__) return;
     AsyncStorage.setItem(DEV_KEY, value ? 'true' : 'false').then(() => checkSubscription());
   }, [checkSubscription]);
 

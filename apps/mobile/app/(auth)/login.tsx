@@ -10,6 +10,7 @@ import { MonsterText } from '@/components/MonsterText';
 import { MonsterColors } from '@/constants/Colors';
 import { supabase } from '@/lib/supabase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from 'expo-router';
@@ -46,12 +47,12 @@ export default function LoginScreen() {
     shadowOpacity: glowOpacity.value,
   }));
 
-  // Load saved credentials from AsyncStorage and auto-login
+  // Load saved credentials — email/remember flag from AsyncStorage, password from SecureStore
   const loadSavedCredentials = async () => {
     try {
       const savedEmail = await AsyncStorage.getItem('@monster_log_email');
-      const savedPassword = await AsyncStorage.getItem('@monster_log_password');
       const savedRemember = await AsyncStorage.getItem('@monster_log_remember');
+      const savedPassword = await SecureStore.getItemAsync('@monster_log_password');
 
       if (savedRemember === 'true' && savedEmail && savedPassword) {
         setEmail(savedEmail);
@@ -73,18 +74,18 @@ export default function LoginScreen() {
     }
   };
 
-  // Save credentials to AsyncStorage
+  // Save credentials — email/remember flag in AsyncStorage, password in SecureStore (encrypted)
   const saveCredentials = async () => {
     try {
       if (rememberMe) {
         await AsyncStorage.setItem('@monster_log_email', email);
-        await AsyncStorage.setItem('@monster_log_password', password);
         await AsyncStorage.setItem('@monster_log_remember', 'true');
+        await SecureStore.setItemAsync('@monster_log_password', password);
       } else {
         // Clear saved credentials if "remember me" is unchecked
         await AsyncStorage.removeItem('@monster_log_email');
-        await AsyncStorage.removeItem('@monster_log_password');
         await AsyncStorage.removeItem('@monster_log_remember');
+        await SecureStore.deleteItemAsync('@monster_log_password');
       }
     } catch (error) {
       console.log('Error saving credentials:', error);
