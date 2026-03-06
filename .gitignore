@@ -27,3 +27,7 @@ pnpm-debug.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Android signing keys — NEVER commit keystores
+*.keystore
+*.jks

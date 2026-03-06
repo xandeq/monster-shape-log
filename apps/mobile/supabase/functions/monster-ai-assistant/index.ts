@@ -1,5 +1,6 @@
 
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
+import { createClient } from 'jsr:@supabase/supabase-js@2'
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -7,7 +8,6 @@ const corsHeaders = {
 }
 
 // Free-tier model via OpenRouter (no cost per token)
-// Fallback chain: Llama 4 Maverick → DeepSeek V3 → Qwen3 235B
 const FREE_MODEL = 'meta-llama/llama-4-maverick:free'
 
 async function callOpenRouter(
@@ -82,9 +82,58 @@ Deno.serve(async (req) => {
     }
 
     try {
-        const { prompt, context, action, muscleGroups, exerciseName, system, user_tier } = await req.json()
+        // ── Mandatory JWT authentication ──────────────────────────────────────
+        const SUPABASE_URL = Deno.env.get('SUPABASE_URL')
+        const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
 
-        // ── YouTube video search (no AI needed) ──────────────────────────────
+        if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+            throw new Error('Missing required server configuration')
+        }
+
+        const authHeader = req.headers.get('Authorization') ?? ''
+        const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null
+
+        if (!token) {
+            return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+                status: 401,
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            })
+        }
+
+        // Verify user identity via JWT (service role required to call auth.getUser)
+        const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+        const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token)
+
+        if (authError || !user) {
+            return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+                status: 401,
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            })
+        }
+
+        // ── Fetch actual subscription from DB — NEVER trust client-supplied tier ─
+        const { data: sub } = await supabaseAdmin
+            .from('subscriptions')
+            .select('plan, status, expires_at')
+            .eq('user_id', user.id)
+            .maybeSingle()
+
+        const expiresAt = sub?.expires_at ? new Date(sub.expires_at) : null
+        const isExpired = expiresAt ? expiresAt < new Date() : false
+        const isPro = !isExpired
+            && (sub?.plan === 'pro' || sub?.plan === 'elite')
+            && sub?.status !== 'expired'
+            && sub?.status !== 'cancelled'
+
+        // ── Parse body (user_tier from body is intentionally ignored) ─────────
+        const { prompt, context, action, muscleGroups, exerciseName, system } = await req.json()
+
+        // Server-side prompt length guard
+        if (prompt && prompt.length > 2000) {
+            throw new Error('Prompt exceeds maximum length')
+        }
+
+        // ── YouTube video search (all authenticated users) ────────────────────
         if (action === 'search_video') {
             const YOUTUBE_API_KEY = Deno.env.get('YOUTUBE_API_KEY')
             if (!YOUTUBE_API_KEY) throw new Error('Missing YOUTUBE_API_KEY')
@@ -113,8 +162,15 @@ Deno.serve(async (req) => {
             })
         }
 
-        // ── Workout generation (always use GPT-4o — needs reliable JSON) ────
+        // ── Workout generation (PRO only — uses GPT-4o for reliable JSON) ──────
         if (action === 'generate_workout') {
+            if (!isPro) {
+                return new Response(JSON.stringify({ error: 'Pro subscription required for workout generation' }), {
+                    status: 403,
+                    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                })
+            }
+
             const openAiApiKey = Deno.env.get('OPENAI_API_KEY')
             if (!openAiApiKey) throw new Error('Missing OPENAI_API_KEY')
 
@@ -143,14 +199,12 @@ Deno.serve(async (req) => {
         }
 
         // ── Coach chat ────────────────────────────────────────────────────────
-        // Use the system prompt passed from the app (contains user context + persona)
+        // user_tier from body is intentionally ignored — isPro is verified from DB above
         const systemPrompt = system ?? `
             Você é o "Treinador Monstro", um personal trainer virtual motivador, direto e técnico.
             Use linguagem brasileira informal. Emojis com moderação. Máximo 4 parágrafos.
             Contexto do Usuário: ${JSON.stringify(context || {})}
         `
-
-        const isPro = user_tier === 'pro'
 
         if (isPro) {
             // Pro users → GPT-4o (best quality)

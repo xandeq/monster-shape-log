@@ -1,11 +1,12 @@
 
-
 import { supabase } from '@/lib/supabase';
 
 export const askMonsterCoach = async (
     prompt: string,
     context: any = {},
-    userTier: 'free' | 'pro' = 'free',
+    // userTier is kept as param for API compatibility but is IGNORED by the server.
+    // The edge function verifies the plan directly from the database.
+    _userTier: 'free' | 'pro' = 'free',
 ): Promise<string> => {
     try {
         const coachSystem = context._isCoachChat
@@ -13,7 +14,7 @@ export const askMonsterCoach = async (
             : undefined;
 
         const { data, error } = await supabase.functions.invoke('monster-ai-assistant', {
-            body: { prompt, context, user_tier: userTier, ...(coachSystem ? { system: coachSystem } : {}) }
+            body: { prompt, context, ...(coachSystem ? { system: coachSystem } : {}) }
         });
 
         if (error) {
@@ -37,8 +38,6 @@ interface MusclePayload {
 
 export const generateWorkoutPlan = async (muscleGroups: MusclePayload[]): Promise<any> => {
     try {
-        console.log(`Asking Monster Coach to generate workout for: ${JSON.stringify(muscleGroups)}...`);
-
         const { data, error } = await supabase.functions.invoke('monster-ai-assistant', {
             body: {
                 action: 'generate_workout',
@@ -61,24 +60,11 @@ export const generateWorkoutPlan = async (muscleGroups: MusclePayload[]): Promis
 
 export const searchExerciseVideo = async (exerciseName: string): Promise<{ title: string; url: string; thumbnail: string }[]> => {
     try {
-        console.log(`Asking Monster Coach to find video for: ${exerciseName}...`);
-
-        // DEBUG: Check what headers are potentially being sent
-        const session = await supabase.auth.getSession();
-        console.log("DEBUG: Access Token:", session.data.session?.access_token ? "Exists (Valid)" : "Missing");
-        // console.log("DEBUG: Supabase Key used:", supabase['supabaseKey']); // Accessing internal property might differ based on version
-
-        // Force using the Anon Key for Authorization to bypass any potential stale User Token issues
-        // The edge function is public (for now) so this is safe for search.
         const { data, error } = await supabase.functions.invoke('monster-ai-assistant', {
             body: {
                 action: 'search_video',
                 exerciseName,
             },
-            headers: {
-                // Explicitly set authorization to the Anon Key
-                Authorization: `Bearer ${supabase['supabaseKey'] || process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY}`
-            }
         });
 
         if (error) {
@@ -86,11 +72,9 @@ export const searchExerciseVideo = async (exerciseName: string): Promise<{ title
             throw new Error(`Supabase Function Error: ${error.message}`);
         }
 
-        // The AI (or YouTube part) returns { reply: JSON_STRING }
-        // The JSON_STRING might be an array OR an object { "videos": [...] }
+        // The response returns { reply: JSON_STRING } or { reply: { videos: [...] } }
         let parsed = typeof data.reply === 'string' ? JSON.parse(data.reply) : data.reply;
 
-        // Handle case where it returns { videos: [...] }
         if (!Array.isArray(parsed) && parsed.videos) {
             parsed = parsed.videos;
         }
