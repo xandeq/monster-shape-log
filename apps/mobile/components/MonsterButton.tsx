@@ -1,19 +1,28 @@
+/**
+ * MonsterButton - Gradient button with press animation
+ * Primary: green→cyan gradient | Secondary: gradient border | Danger: red
+ */
+import { AnimationConfig } from '@/constants/Animations';
 import { MonsterColors } from '@/constants/Colors';
-import { styled } from '@/lib/styled';
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 
-const StyledTouchableOpacity = styled(TouchableOpacity);
-const StyledText = styled(Text);
-const StyledView = styled(View);
-
-export interface MonsterButtonProps extends TouchableOpacityProps {
+export interface MonsterButtonProps {
   title: string;
   variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
   loading?: boolean;
   icon?: React.ReactNode;
   fullWidth?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  onPress?: () => void;
+  style?: any;
 }
 
 export const MonsterButton: React.FC<MonsterButtonProps> = ({
@@ -23,56 +32,128 @@ export const MonsterButton: React.FC<MonsterButtonProps> = ({
   icon,
   fullWidth = false,
   size = 'md',
-  className = '',
   disabled,
-  ...props
+  onPress,
+  style,
 }) => {
+  const scale = useSharedValue(1);
 
-  const getBaseStyles = () => "flex-row items-center justify-center rounded-default active:opacity-80";
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
 
-  const getSizeStyles = () => {
-      if (size === 'sm') return "h-10 px-4";
-      if (size === 'lg') return "h-14 px-8";
-      return "h-[48px] px-6";
+  const handlePressIn = () => {
+    scale.value = withSpring(AnimationConfig.pressScale.button, AnimationConfig.spring.press);
   };
 
-  const getVariantStyles = () => {
-    switch (variant) {
-      case 'primary': return "bg-accent border border-accent";
-      case 'secondary': return "bg-transparent border border-accent";
-      case 'danger': return "bg-error border border-error";
-      case 'ghost': return "bg-transparent border-transparent";
-      default: return "bg-accent";
-    }
+  const handlePressOut = () => {
+    scale.value = withSpring(1, AnimationConfig.spring.gentle);
   };
 
-  const getTextStyles = () => {
-    switch (variant) {
-      case 'primary': return "text-background font-mono font-bold uppercase";
-      case 'secondary': return "text-accent font-mono font-bold uppercase";
-      case 'danger': return "text-white font-mono font-bold uppercase";
-      case 'ghost': return "text-accent font-mono font-bold uppercase";
-      default: return "text-background";
-    }
-  };
+  const sizeStyle = size === 'sm' ? styles.sm : size === 'lg' ? styles.lg : styles.md;
 
-  return (
-    <StyledTouchableOpacity
-      className={`${getBaseStyles()} ${getSizeStyles()} ${getVariantStyles()} ${fullWidth ? 'w-full' : ''} ${disabled || loading ? 'opacity-50' : ''} ${className}`}
-      disabled={disabled || loading}
-      activeOpacity={0.8}
-      {...props}
-    >
+  const textColor = {
+    primary: MonsterColors.background,
+    secondary: MonsterColors.primary,
+    danger: '#FFFFFF',
+    ghost: MonsterColors.primary,
+  }[variant];
+
+  const indicatorColor = variant === 'secondary' || variant === 'ghost' ? MonsterColors.primary : '#000';
+
+  const buttonContent = (
+    <>
       {loading ? (
-        <ActivityIndicator color={variant === 'secondary' || variant === 'ghost' ? MonsterColors.accent : '#000'} />
+        <ActivityIndicator color={indicatorColor} />
       ) : (
         <>
-          {icon && <StyledView className="mr-2">{icon}</StyledView>}
-          <StyledText className={`${getTextStyles()} text-sm tracking-widest`}>
-            {title}
-          </StyledText>
+          {icon && <View style={styles.iconWrap}>{icon}</View>}
+          <Text style={[styles.text, { color: textColor }]}>{title}</Text>
         </>
       )}
-    </StyledTouchableOpacity>
+    </>
+  );
+
+  return (
+    <Pressable
+      onPress={onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      disabled={disabled || loading}
+      style={[fullWidth && styles.fullWidth, style]}
+    >
+      <Animated.View style={[animatedStyle, (disabled || loading) && styles.disabled]}>
+        {variant === 'primary' ? (
+          <LinearGradient
+            colors={MonsterColors.gradientPrimary}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={[styles.base, sizeStyle, styles.primaryShadow]}
+          >
+            {buttonContent}
+          </LinearGradient>
+        ) : variant === 'secondary' ? (
+          <LinearGradient
+            colors={MonsterColors.gradientPrimary}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={[styles.base, sizeStyle, { padding: 1.5 }]}
+          >
+            <View style={[styles.base, sizeStyle, styles.secondaryInner]}>
+              {buttonContent}
+            </View>
+          </LinearGradient>
+        ) : variant === 'danger' ? (
+          <View style={[styles.base, sizeStyle, styles.danger]}>
+            {buttonContent}
+          </View>
+        ) : (
+          <View style={[styles.base, sizeStyle, styles.ghost]}>
+            {buttonContent}
+          </View>
+        )}
+      </Animated.View>
+    </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  base: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 12,
+  },
+  sm: { height: 40, paddingHorizontal: 16 },
+  md: { height: 48, paddingHorizontal: 24 },
+  lg: { height: 56, paddingHorizontal: 32 },
+  primaryShadow: {
+    shadowColor: MonsterColors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  secondaryInner: {
+    backgroundColor: MonsterColors.background,
+  },
+  danger: {
+    backgroundColor: MonsterColors.error,
+    borderWidth: 1,
+    borderColor: MonsterColors.error,
+  },
+  ghost: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  fullWidth: { width: '100%' },
+  disabled: { opacity: 0.5 },
+  iconWrap: { marginRight: 8 },
+  text: {
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    fontSize: 12,
+    letterSpacing: 1,
+  },
+});

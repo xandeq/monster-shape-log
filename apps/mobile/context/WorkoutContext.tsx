@@ -50,6 +50,7 @@ interface WorkoutContextType {
   removeExercise: (exerciseId: string) => void;
   deleteWorkout: (workoutId: string) => Promise<void>;
   getExerciseProgression: (exerciseName: string) => Promise<ProgressionData | null>;
+  refreshHistory: () => Promise<void>;
 }
 
 const WorkoutContext = createContext<WorkoutContextType | undefined>(undefined);
@@ -388,7 +389,8 @@ export const WorkoutProvider: React.FC<{ children: ReactNode }> = ({ children })
         loadAIWorkout,
         removeExercise,
         deleteWorkout,
-        getExerciseProgression: getExerciseProgressionWrapper
+        getExerciseProgression: getExerciseProgressionWrapper,
+        refreshHistory: fetchHistory,
     }}>
       {children}
     </WorkoutContext.Provider>

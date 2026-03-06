@@ -1,8 +1,9 @@
-import { styled } from '@/lib/styled';
+/**
+ * MonsterText - Typography component with cyberpunk glow support
+ */
+import { MonsterColors } from '@/constants/Colors';
 import React from 'react';
-import { Text, TextProps } from 'react-native';
-
-const StyledText = styled(Text);
+import { Text, TextProps, TextStyle } from 'react-native';
 
 type TextVariant = 'display' | 'titleLg' | 'titleMd' | 'titleSm' | 'body' | 'caption' | 'tiny';
 
@@ -11,37 +12,56 @@ interface MonsterTextProps extends TextProps {
   children: React.ReactNode;
   className?: string;
   neon?: boolean;
+  glow?: boolean;
+  glowColor?: string;
 }
+
+const variantStyles: Record<TextVariant, TextStyle> = {
+  display: { fontSize: 32, fontWeight: '700', textTransform: 'uppercase', letterSpacing: -0.5 },
+  titleLg: { fontSize: 28, lineHeight: 34, fontWeight: '700', textTransform: 'uppercase', letterSpacing: -0.25 },
+  titleMd: { fontSize: 22, lineHeight: 28, fontWeight: '700', textTransform: 'uppercase', letterSpacing: -0.25 },
+  titleSm: { fontSize: 18, lineHeight: 24, fontWeight: '600', textTransform: 'uppercase' },
+  body: { fontSize: 16, lineHeight: 24, fontWeight: '400' },
+  caption: { fontSize: 13, lineHeight: 18, fontWeight: '400' },
+  tiny: { fontSize: 11, lineHeight: 14, fontWeight: '400', textTransform: 'uppercase', letterSpacing: 0.5 },
+};
+
+const variantColors: Record<TextVariant, string> = {
+  display: MonsterColors.textPrimary,
+  titleLg: MonsterColors.textPrimary,
+  titleMd: MonsterColors.textPrimary,
+  titleSm: MonsterColors.textPrimary,
+  body: MonsterColors.textSecondary,
+  caption: MonsterColors.textSecondary,
+  tiny: MonsterColors.textMuted,
+};
 
 export const MonsterText: React.FC<MonsterTextProps> = ({
   children,
   variant = 'body',
-  className = '',
   neon = false,
+  glow = false,
+  glowColor,
   style,
   ...props
 }) => {
-  const getVariantClasses = () => {
-    switch (variant) {
-      case 'display': return 'text-4xl font-mono font-bold uppercase tracking-tighter';
-      case 'titleLg': return 'text-title-lg font-mono font-bold uppercase tracking-tight';
-      case 'titleMd': return 'text-title-md font-mono font-bold uppercase tracking-tight';
-      case 'titleSm': return 'text-title-sm font-mono font-semibold uppercase';
-      case 'body': return 'text-body font-mono font-normal';
-      case 'caption': return 'text-caption font-mono font-normal text-text-secondary';
-      case 'tiny': return 'text-tiny font-mono font-normal text-text-muted uppercase tracking-wider';
-      default: return 'text-body font-mono';
-    }
-  };
+  const color = neon ? MonsterColors.accent : variantColors[variant];
 
-  const colorClass = neon ? 'text-accent' : (variant.startsWith('title') ? 'text-text-primary' : 'text-text-secondary');
-
-  // Override color if explicitly provided in className, otherwise use default
-  const finalClass = `${getVariantClasses()} ${!className.includes('text-') ? colorClass : ''} ${className}`;
+  const shouldGlow = neon || glow;
+  const glowStyles: TextStyle = shouldGlow
+    ? {
+        textShadowColor: glowColor || MonsterColors.glow,
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 10,
+      }
+    : {};
 
   return (
-    <StyledText className={finalClass} style={style} {...props}>
+    <Text
+      style={[variantStyles[variant], { color }, shouldGlow && glowStyles, style]}
+      {...props}
+    >
       {children}
-    </StyledText>
+    </Text>
   );
 };

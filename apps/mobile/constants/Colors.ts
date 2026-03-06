@@ -1,50 +1,68 @@
 /**
- * Monster Log - Design System Colors
- * Updated for Hardcore Workout Aesthetic
+ * Monster Log - Cyberpunk Neon Design System
+ * Deep blue-black backgrounds + neon green/purple/cyan accents
  */
 
-const tintColorLight = '#00FF88';
-const tintColorDark = '#00FF88';
-
 export const MonsterColors = {
-  background: '#0A0A0A',
-  secondary: '#111111',
-  elevated: '#1A1A1A',
+  // Backgrounds
+  background: '#050510',       // Deep blue-black
+  secondary: '#0A0F1E',        // Dark navy
+  elevated: '#111827',          // Card backgrounds
 
-  primary: '#00FF88', // Neon Green
-  accent: '#00FF88', // Alias
-  accentPink: '#FF2D55', // Neon Pink
+  // Brand / Accents
+  primary: '#00FF88',           // Neon Green
+  accent: '#00FF88',            // Alias for primary
+  accentPink: '#FF2D55',        // Neon Pink
+  purple: '#7C3AED',            // Electric Purple
+  cyan: '#06B6D4',              // Cyan Blue
+  amber: '#F59E0B',             // Gold / Amber (streaks, rewards)
 
-  textPrimary: '#FFFFFF',
-  textSecondary: '#D4D4D4', // Light Gray (Neutral-300)
-  textMuted: '#A3A3A3', // Medium Gray (Neutral-400), much lighter than #666666
+  // Text
+  textPrimary: '#F8FAFC',       // Bright warm white
+  textSecondary: '#94A3B8',     // Slate gray
+  textMuted: '#64748B',         // Darker slate
 
-  success: '#00FF88',
-  error: '#FF3B30',
-  warning: '#FF9500',
+  // Status
+  success: '#10B981',           // Emerald (distinct from primary)
+  error: '#EF4444',             // Red
+  warning: '#F59E0B',           // Amber
 
-  border: '#1F1F1F',
+  // Borders & Effects
+  border: 'rgba(255,255,255,0.08)',         // Subtle white border
+  borderGlow: 'rgba(0,255,136,0.15)',       // Green glow border
+  glass: 'rgba(255,255,255,0.05)',          // Glassmorphism fill
+  glassBorder: 'rgba(255,255,255,0.1)',     // Glass border
+  glow: 'rgba(0,255,136,0.3)',              // Green glow shadow
+  glowPurple: 'rgba(124,58,237,0.3)',       // Purple glow
+  glowCyan: 'rgba(6,182,212,0.3)',          // Cyan glow
+
+  // Gradient arrays (for LinearGradient)
+  gradientPrimary: ['#00FF88', '#06B6D4'] as const,
+  gradientSecondary: ['#7C3AED', '#EC4899'] as const,
+  gradientFire: ['#F59E0B', '#EF4444'] as const,
+  gradientDark: ['#050510', '#0A0F1E'] as const,
+  gradientCard: ['rgba(255,255,255,0.08)', 'rgba(255,255,255,0.02)'] as const,
 
   // Legacy support
-  text: '#FFFFFF',
-  tint: tintColorDark,
-  tabIconDefault: '#666666',
-  tabIconSelected: tintColorDark,
+  text: '#F8FAFC',
+  tint: '#00FF88',
+  tabIconDefault: '#64748B',
+  tabIconSelected: '#00FF88',
 };
 
 export default {
   light: {
-    text: '#FFFFFF',
-    background: '#0A0A0A',
-    tint: tintColorLight,
-    tabIconDefault: '#666666',
-    tabIconSelected: tintColorLight,
+    text: '#F8FAFC',
+    background: '#050510',
+    tint: '#00FF88',
+    tabIconDefault: '#64748B',
+    tabIconSelected: '#00FF88',
   },
   dark: {
-    text: '#FFFFFF',
-    background: '#0A0A0A',
-    tint: tintColorDark,
-    tabIconDefault: '#666666',
-    tabIconSelected: tintColorDark,
+    text: '#F8FAFC',
+    background: '#050510',
+    tint: '#00FF88',
+    tabIconDefault: '#64748B',
+    tabIconSelected: '#00FF88',
   },
 };

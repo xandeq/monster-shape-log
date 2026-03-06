@@ -17,13 +17,14 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import './global.css';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { ProgressProvider } from '@/context/ProgressContext';
+import { SubscriptionProvider } from '@/context/SubscriptionContext';
 import { WorkoutProvider } from '@/context/WorkoutContext';
 import { useRouter, useSegments } from 'expo-router';
 
@@ -41,7 +42,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     SpaceGrotesk: SpaceGrotesk_400Regular,
     SpaceGroteskLight: SpaceGrotesk_300Light,
@@ -56,18 +57,33 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+  // Timeout so the app never gets stuck on splash if fonts fail/hang
+  const [timedOut, setTimedOut] = useState(false);
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    const timer = setTimeout(() => {
+      console.warn('[Layout] Font loading timed out after 10s, proceeding without custom fonts');
+      setTimedOut(true);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    if (fontError) {
+      console.error('[Layout] Font load error:', fontError);
     }
-  }, [loaded]);
+  }, [fontError]);
 
-  if (!loaded) {
+  const ready = fontsLoaded || fontError || timedOut;
+
+  useEffect(() => {
+    if (ready) {
+      SplashScreen.hideAsync().catch((e) =>
+        console.warn('[Layout] SplashScreen.hideAsync error:', e)
+      );
+    }
+  }, [ready]);
+
+  if (!ready) {
     return null;
   }
 
@@ -80,11 +96,13 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <AuthProvider>
+        <SubscriptionProvider>
           <WorkoutProvider>
             <ProgressProvider>
                 <AuthGuard />
             </ProgressProvider>
           </WorkoutProvider>
+        </SubscriptionProvider>
       </AuthProvider>
     </ThemeProvider>
   );
@@ -102,10 +120,10 @@ function AuthGuard() {
 
         if (!session && !inAuthGroup) {
             // Redirect to the sign-in page.
-            router.replace('/login');
+            router.replace('/(auth)/login');
         } else if (session && inAuthGroup) {
             // Redirect away from the sign-in page.
-            router.replace('/');
+            router.replace('/(tabs)');
         }
     }, [session, loading, segments]);
 
@@ -124,9 +142,11 @@ function AuthGuard() {
             }}
         >
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="welcome" options={{ headerShown: false }} />
             <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Informações' }} />
+            <Stack.Screen name="coach" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
+            <Stack.Screen name="plans" options={{ headerShown: false, animation: 'slide_from_bottom' }} />
         </Stack>
     );
 }

@@ -1,32 +1,87 @@
+/**
+ * Tab Layout - Cyberpunk Neon Navigation
+ * Ionicons with gradient active indicator + bounce animation
+ */
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { useColorScheme } from '@/components/useColorScheme';
 import { MonsterColors } from '@/constants/Colors';
+import { AnimationConfig } from '@/constants/Animations';
 import { useAuth } from '@/context/AuthContext';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Tabs, router } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+function TabBarIcon({
+  name,
+  color,
+  focused,
+}: {
+  name: React.ComponentProps<typeof Ionicons>['name'];
   color: string;
+  focused: boolean;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: 0 }} {...props} />;
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    if (focused) {
+      scale.value = withSpring(1.2, AnimationConfig.spring.bouncy);
+      setTimeout(() => {
+        scale.value = withSpring(1, AnimationConfig.spring.gentle);
+      }, 200);
+    }
+  }, [focused]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  return (
+    <View style={{ alignItems: 'center', gap: 6 }}>
+      <Animated.View style={animatedStyle}>
+        <Ionicons size={24} name={name} color={color} />
+      </Animated.View>
+      {focused && (
+        <LinearGradient
+          colors={MonsterColors.gradientPrimary}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{ width: 20, height: 3, borderRadius: 2 }}
+        />
+      )}
+    </View>
+  );
 }
 
-function HeaderTitle({ title, icon }: { title: string; icon: React.ComponentProps<typeof FontAwesome>['name'] }) {
+function HeaderTitle({ title, iconName }: { title: string; iconName: React.ComponentProps<typeof Ionicons>['name'] }) {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-      {/* Icon color: using Primary (Green) for contrast */}
-      <FontAwesome name={icon} size={20} color={MonsterColors.primary} />
-      <Text style={{ fontSize: 20, fontWeight: 'bold', color: MonsterColors.textPrimary, fontFamily: 'SpaceGrotesk' }}>{title}</Text>
+      <Ionicons name={iconName} size={20} color={MonsterColors.primary} />
+      <Text style={{
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: MonsterColors.textPrimary,
+        fontFamily: 'SpaceGrotesk',
+        textShadowColor: MonsterColors.glow,
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 6,
+      }}>
+        {title}
+      </Text>
     </View>
   );
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const { signOut } = useAuth();
+  const insets = useSafeAreaInsets();
+  const bottomPadding = Math.max(insets.bottom, 8);
 
   return (
     <Tabs
@@ -36,19 +91,25 @@ export default function TabLayout() {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: MonsterColors.background,
-          borderTopColor: MonsterColors.border,
-          height: 60,
+          borderTopWidth: 0,
+          height: 60 + bottomPadding,
           paddingTop: 10,
+          paddingBottom: bottomPadding,
+          shadowColor: MonsterColors.primary,
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.08,
+          shadowRadius: 15,
+          elevation: 10,
         },
         tabBarItemStyle: {
-            justifyContent: 'center',
-            alignItems: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         headerTitleAlign: 'center',
         headerStyle: {
           backgroundColor: MonsterColors.background,
           borderBottomColor: MonsterColors.border,
-          borderBottomWidth: 1,
+          borderBottomWidth: 0,
           elevation: 0,
           shadowOpacity: 0,
           height: 100,
@@ -60,10 +121,10 @@ export default function TabLayout() {
         headerLeft: () => (
           <Pressable onPress={() => router.push('/profile')} style={{ marginLeft: 20 }}>
             {({ pressed }) => (
-              <FontAwesome
-                name="user-circle"
-                size={24}
-                color={MonsterColors.textPrimary}
+              <Ionicons
+                name="person-circle-outline"
+                size={28}
+                color={MonsterColors.textSecondary}
                 style={{ opacity: pressed ? 0.5 : 1 }}
               />
             )}
@@ -72,8 +133,8 @@ export default function TabLayout() {
         headerRight: () => (
           <Pressable onPress={signOut} style={{ marginRight: 20 }}>
             {({ pressed }) => (
-              <FontAwesome
-                name="sign-out"
+              <Ionicons
+                name="log-out-outline"
                 size={24}
                 color={MonsterColors.error}
                 style={{ opacity: pressed ? 0.5 : 1 }}
@@ -85,36 +146,55 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          headerTitle: () => <HeaderTitle title="Dashboard" icon="dashboard" />,
-          tabBarIcon: ({ color }) => <TabBarIcon name="dashboard" color={color} />,
+          headerTitle: () => <HeaderTitle title="Dashboard" iconName="grid" />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'grid' : 'grid-outline'} color={color} focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
         name="track"
         options={{
-          headerTitle: () => <HeaderTitle title="Track" icon="pencil-square-o" />,
-          tabBarIcon: ({ color }) => <TabBarIcon name="pencil-square-o" color={color} />,
+          headerTitle: () => <HeaderTitle title="Treino" iconName="barbell" />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'barbell' : 'barbell-outline'} color={color} focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
-          headerTitle: () => <HeaderTitle title="Histórico" icon="history" />,
-          tabBarIcon: ({ color }) => <TabBarIcon name="history" color={color} />,
+          headerTitle: () => <HeaderTitle title="Histórico" iconName="time" />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'time' : 'time-outline'} color={color} focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
         name="timer"
         options={{
-          headerTitle: () => <HeaderTitle title="Timer" icon="clock-o" />,
-          tabBarIcon: ({ color }) => <TabBarIcon name="clock-o" color={color} />,
+          headerTitle: () => <HeaderTitle title="Timer" iconName="timer" />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'timer' : 'timer-outline'} color={color} focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
         name="library"
         options={{
-          headerTitle: () => <HeaderTitle title="Biblioteca" icon="book" />,
-          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
+          headerTitle: () => <HeaderTitle title="Biblioteca" iconName="library" />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'library' : 'library-outline'} color={color} focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="body"
+        options={{
+          headerTitle: () => <HeaderTitle title="Corpo" iconName="body" />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'body' : 'body-outline'} color={color} focused={focused} />
+          ),
         }}
       />
     </Tabs>

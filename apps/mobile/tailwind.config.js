@@ -5,27 +5,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#0A0A0A",
-        secondary: "#111111",
-        elevated: "#1A1A1A",
-        accent: "#00FF88", // Neon Green
-        "accent-pink": "#FF2D55", // Neon Pink
-        "text-primary": "#FFFFFF",
-        "text-secondary": "#D4D4D4",
-        "text-muted": "#A3A3A3",
-        success: "#00FF88",
-        error: "#FF3B30",
-        warning: "#FF9500",
-        border: "#1F1F1F",
-        // Keep old tokens mapping to new ones to prevent immediate crashes during refactor if used
-        foreground: "#FFFFFF",
-        muted: "#1A1A1A",
-        "muted-foreground": "#A3A3A3",
+        background: "#050510",
+        secondary: "#0A0F1E",
+        elevated: "#111827",
+        accent: "#00FF88",
+        "accent-pink": "#FF2D55",
+        purple: "#7C3AED",
+        cyan: "#06B6D4",
+        amber: "#F59E0B",
+        "text-primary": "#F8FAFC",
+        "text-secondary": "#94A3B8",
+        "text-muted": "#64748B",
+        success: "#10B981",
+        error: "#EF4444",
+        warning: "#F59E0B",
+        border: "rgba(255,255,255,0.08)",
+        glass: "rgba(255,255,255,0.05)",
+        "glass-border": "rgba(255,255,255,0.1)",
+        // Legacy tokens
+        foreground: "#F8FAFC",
+        muted: "#111827",
+        "muted-foreground": "#64748B",
         "accent-foreground": "#000000",
       },
       fontFamily: {
-        space: ["SpaceGrotesk", "sans-serif"], // Keep for legacy, but prioritize SpaceMono in new components if needed, though prompt said SpaceMono.
-        mono: ["SpaceMono", "monospace"], // Add SpaceMono
+        space: ["SpaceGrotesk", "sans-serif"],
+        mono: ["SpaceMono", "monospace"],
         inter: ["Inter", "sans-serif"],
       },
       spacing: {
@@ -47,9 +52,9 @@ module.exports = {
       borderRadius: {
         none: "0px",
         sm: "4px",
-        DEFAULT: "12px", // Button radius
+        DEFAULT: "12px",
         md: "12px",
-        lg: "16px", // Card radius
+        lg: "16px",
         full: "9999px",
       },
     },

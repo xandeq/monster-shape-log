@@ -74,6 +74,16 @@ export default function ProfileScreen() {
 
   const pickImage = async () => {
     try {
+      // Request permission explicitly (required on Android 13+)
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert(
+          'Permissão necessária',
+          'Permita o acesso à galeria nas configurações do app para alterar a foto.',
+        );
+        return;
+      }
+
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,

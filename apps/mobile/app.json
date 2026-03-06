@@ -2,7 +2,7 @@
   "expo": {
     "name": "Monster Log",
     "slug": "monster-log",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "monsterlog",
@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#050510"
     },
     "ios": {
       "supportsTablet": true
@@ -19,11 +19,11 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#050510"
       },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.xandeq.monstershapelog"
+      "edgeToEdgeEnabled": false,
+      "package": "br.com.monsterlog",
+      "versionCode": 5
     },
     "web": {
       "bundler": "metro",

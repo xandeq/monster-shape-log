@@ -4,10 +4,14 @@ import { MonsterButton } from '@/components/MonsterButton';
 import { MonsterCard } from '@/components/MonsterCard';
 import { MonsterLayout } from '@/components/MonsterLayout';
 import { MonsterText } from '@/components/MonsterText';
+import { PRBadge } from '@/components/PRBadge';
 import { ProgressWidget } from '@/components/ProgressWidget';
+import { TemplatePickerModal } from '@/components/TemplatePickerModal';
 import { MonsterColors } from '@/constants/Colors';
 import { ProgressionData, useWorkout } from '@/context/WorkoutContext';
+import { saveTemplate, templateToExercises, WorkoutTemplate } from '@/lib/templates';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, TextInput, TouchableOpacity, View } from 'react-native';
@@ -26,7 +30,8 @@ export default function TrackScreen() {
       toggleSet,
       removeExercise,
       removeSet,
-      getExerciseProgression
+      getExerciseProgression,
+      loadAIWorkout,
   } = useWorkout();
 
   const [newExerciseName, setNewExerciseName] = useState('');
@@ -34,6 +39,64 @@ export default function TrackScreen() {
   const [libraryModalVisible, setLibraryModalVisible] = useState(false);
   const [progressionMap, setProgressionMap] = useState<Record<string, ProgressionData | null>>({});
   const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
+  const [prFlashSets, setPrFlashSets] = useState<Set<string>>(new Set());
+  const [templatePickerVisible, setTemplatePickerVisible] = useState(false);
+
+  const handleSaveTemplate = () => {
+    if (currentWorkout.length === 0) {
+      Alert.alert('Vazio', 'Adicione exercícios antes de salvar um template.');
+      return;
+    }
+    const name = workoutName || 'Meu Template';
+    Alert.alert(
+      'SALVAR TEMPLATE',
+      `Salvar "${name}" com ${currentWorkout.length} exercício(s)?`,
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Salvar',
+          onPress: async () => {
+            await saveTemplate(name, currentWorkout);
+            Alert.alert('✓ Salvo!', 'Template guardado.');
+          },
+        },
+      ],
+    );
+  };
+
+  const handleLoadTemplate = (template: WorkoutTemplate) => {
+    if (currentWorkout.length > 0) {
+      Alert.alert(
+        'Substituir Treino?',
+        'O treino atual será substituído pelo template.',
+        [
+          { text: 'Cancelar', style: 'cancel' },
+          { text: 'Carregar', onPress: () => loadAIWorkout(templateToExercises(template), template.name) },
+        ],
+      );
+    } else {
+      loadAIWorkout(templateToExercises(template), template.name);
+    }
+  };
+
+  const isPR = (exerciseId: string, weight: string) => {
+    if (!weight) return false;
+    const maxWeight = progressionMap[exerciseId]?.history_stats?.last_max_weight;
+    if (!maxWeight) return false;
+    return parseFloat(weight) > maxWeight;
+  };
+
+  const handleToggleSet = (exerciseId: string, setId: string) => {
+    const exercise = currentWorkout.find(e => e.id === exerciseId);
+    const set = exercise?.sets.find(s => s.id === setId);
+    if (set && !set.completed && isPR(exerciseId, set.weight)) {
+      setPrFlashSets(prev => new Set([...prev, setId]));
+      setTimeout(() => {
+        setPrFlashSets(prev => { const n = new Set(prev); n.delete(setId); return n; });
+      }, 2200);
+    }
+    toggleSet(exerciseId, setId);
+  };
 
   useEffect(() => {
     const loadProgression = async () => {
@@ -190,15 +253,22 @@ export default function TrackScreen() {
 
                              {/* Weight Input */}
                              <View className="flex-1 px-1">
-                                <TextInput
-                                  className={`bg-elevated text-white rounded text-center py-3 text-base font-bold font-mono border ${set.completed ? 'border-success text-success' : 'border-border'}`}
-                                  placeholder="0"
-                                  placeholderTextColor={MonsterColors.textMuted}
-                                  keyboardType="numeric"
-                                  value={set.weight}
-                                  onChangeText={(val) => updateSet(exercise.id, set.id, 'weight', val)}
-                                  editable={!set.completed}
-                                />
+                                <View style={{ position: 'relative' }}>
+                                  <TextInput
+                                    className={`bg-elevated text-white rounded text-center py-3 text-base font-bold font-mono border ${set.completed ? 'border-success text-success' : 'border-border'}`}
+                                    placeholder="0"
+                                    placeholderTextColor={MonsterColors.textMuted}
+                                    keyboardType="numeric"
+                                    value={set.weight}
+                                    onChangeText={(val) => updateSet(exercise.id, set.id, 'weight', val)}
+                                    editable={!set.completed}
+                                  />
+                                  {prFlashSets.has(set.id) && (
+                                    <View style={{ position: 'absolute', top: -14, alignSelf: 'center', zIndex: 20 }}>
+                                      <PRBadge mode="float" />
+                                    </View>
+                                  )}
+                                </View>
                              </View>
 
                              {/* Reps Input */}
@@ -218,7 +288,7 @@ export default function TrackScreen() {
                              <View className="flex-[0.5] items-center justify-center">
                                 <TouchableOpacity
                                   className={`w-10 h-10 rounded-lg items-center justify-center border ${set.completed ? 'bg-success border-success' : 'bg-elevated border-border'}`}
-                                  onPress={() => toggleSet(exercise.id, set.id)}
+                                  onPress={() => handleToggleSet(exercise.id, set.id)}
                                 >
                                   {set.completed && <FontAwesome name="check" size={14} color="#000" />}
                                 </TouchableOpacity>
@@ -247,7 +317,28 @@ export default function TrackScreen() {
 
           {/* Add Exercise Section */}
           <MonsterCard className="mt-4 border-dashed border-border bg-transparent p-4">
-            <MonsterText variant="titleSm" className="mb-4 text-white">ADICIONAR EXERCÍCIO</MonsterText>
+            <View className="flex-row justify-between items-center mb-4">
+              <MonsterText variant="titleSm" className="text-white">ADICIONAR EXERCÍCIO</MonsterText>
+              {/* Template buttons */}
+              <View style={{ flexDirection: 'row', gap: 8 }}>
+                <TouchableOpacity
+                  style={{ flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(0,255,136,0.08)', borderRadius: 8, paddingHorizontal: 8, paddingVertical: 5, borderWidth: 1, borderColor: 'rgba(0,255,136,0.2)' }}
+                  onPress={() => setTemplatePickerVisible(true)}
+                >
+                  <Ionicons name="copy-outline" size={12} color={MonsterColors.primary} />
+                  <MonsterText variant="tiny" style={{ color: MonsterColors.primary, fontSize: 9 }}>TEMPLATES</MonsterText>
+                </TouchableOpacity>
+                {currentWorkout.length > 0 && (
+                  <TouchableOpacity
+                    style={{ flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(6,182,212,0.08)', borderRadius: 8, paddingHorizontal: 8, paddingVertical: 5, borderWidth: 1, borderColor: 'rgba(6,182,212,0.2)' }}
+                    onPress={handleSaveTemplate}
+                  >
+                    <Ionicons name="bookmark-outline" size={12} color={MonsterColors.cyan} />
+                    <MonsterText variant="tiny" style={{ color: MonsterColors.cyan, fontSize: 9 }}>SALVAR</MonsterText>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
             <View className="flex-row items-center gap-3">
                  <TouchableOpacity
                     className="w-12 h-12 bg-elevated rounded-lg items-center justify-center border border-border"
@@ -295,6 +386,11 @@ export default function TrackScreen() {
         visible={libraryModalVisible}
         onClose={() => setLibraryModalVisible(false)}
         onSelect={(name) => addExercise(name)}
+      />
+      <TemplatePickerModal
+        visible={templatePickerVisible}
+        onClose={() => setTemplatePickerVisible(false)}
+        onLoad={handleLoadTemplate}
       />
     </MonsterLayout>
   );

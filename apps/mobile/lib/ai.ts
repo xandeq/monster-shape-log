@@ -2,12 +2,18 @@
 
 import { supabase } from '@/lib/supabase';
 
-export const askMonsterCoach = async (prompt: string, context: any = {}): Promise<string> => {
+export const askMonsterCoach = async (
+    prompt: string,
+    context: any = {},
+    userTier: 'free' | 'pro' = 'free',
+): Promise<string> => {
     try {
-        console.log("Asking Monster Coach (via Supabase Invoke)...");
+        const coachSystem = context._isCoachChat
+            ? `Você é o MONSTER COACH, personal trainer virtual especializado em hipertrofia, força e performance. Personalidade: direto, motivador, técnico. Use linguagem brasileira informal. Emojis com moderação. Máximo 4 parágrafos. Contexto do usuário: ${context.total_workouts ?? 0} treinos, ${context.total_volume_kg ?? 0}kg volume total, sequência de ${context.streak_days ?? 0} dias, ${context.this_week ?? 0} treinos esta semana. Último treino: "${context.last_workout_name ?? 'nenhum'}" (${context.last_workout_date ?? 'nunca'}) com ${context.last_workout_exercises ?? 'exercícios desconhecidos'}.`
+            : undefined;
 
         const { data, error } = await supabase.functions.invoke('monster-ai-assistant', {
-            body: { prompt, context }
+            body: { prompt, context, user_tier: userTier, ...(coachSystem ? { system: coachSystem } : {}) }
         });
 
         if (error) {
